@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/26 20:05:28 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/26 21:49:36 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct	s_vars
 	int		padding;
 	int		precision;
 	int		flags;
+	char	*buf;
 }				t_vars;
 
 //flags
@@ -60,6 +61,13 @@ int	ft_printf(const char *format, ...);
 int	ft_dprintf(int fd, const char *format, ...);
 int	ft_vprintf(const char *format, va_list ap);
 int	ft_vdprintf(int fd, const char *format, va_list ap);
+int	ft_sprintf(char *str, const char *format, ...);
+
+int	ft_vsprintf(char *str, const char *format, va_list ap);
+int	ft_snprintf(char *str, size_t size, const char *format, ...);
+int	ft_vsnprintf(char *str, size_t size, const char *format, va_list ap);
+int	ft_asprintf(char **ret, const char *format, ...);
+int	ft_vasprintf(char **ret, const char *format, va_list ap);
 
 int	core(t_vars *v);
 
