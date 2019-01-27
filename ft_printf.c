@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 02:02:01 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/26 17:01:15 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/26 20:18:00 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,18 @@ int ft_vprintf(const char *format, va_list ap)
 
 int	ft_vdprintf(int fd, const char *format, va_list ap)
 {
-	return (1);
+	t_vars	*v;
+	int		ret;
+
+	if (!(v = ft_memalloc(sizeof(*v))))
+		return (-1);
+	ft_bzero(v, sizeof(*v));
+	v->format = (char *)format;
+	v->args = (va_list *)&ap;
+	v->fd = fd;
+//	v->len = 0;
+	v->len = core(v);
+	ret = v->len;
+	free(v);
+	return (ret);
 }
