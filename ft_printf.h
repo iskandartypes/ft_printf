@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/26 21:49:36 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 00:26:57 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct	s_vars
 	char	*format;
 	va_list	*args;
 	int		len;
-	int		fd;
 	int		base;
 	int		padding;
 	int		precision;
