@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 21:45:26 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 00:26:54 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 16:56:39 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 ** This is slightly edited here; both are always NULL-terminated
 ** (unlike the OG), although they can still both overwrite the end of the buf.
 */
+
 int	ft_vsprintf(char *str, const char *format, va_list ap)
 {
 	int		len;
@@ -69,7 +70,8 @@ int	ft_asprintf(char **ret, const char *format, ...)
 	va_end(args);
 	return (len);
 }
-int ft_vasprintf(char **ret, const char *format, va_list ap)
+
+int	ft_vasprintf(char **ret, const char *format, va_list ap)
 {
 	t_vars	*v;
 	int		len;

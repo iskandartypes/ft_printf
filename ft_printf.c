@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 02:02:01 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 00:26:50 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 16:57:27 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_dprintf(int fd, const char *format, ...)
 	return (len);
 }
 
-int ft_vprintf(const char *format, va_list ap)
+int	ft_vprintf(const char *format, va_list ap)
 {
 	return (ft_vdprintf(1, format, ap));
 }
@@ -43,7 +43,7 @@ int	ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	int		len;
 	char	**ret;
-	
+
 	len = ft_vasprintf(ret, format, ap);
 	if (!*ret)
 		return (-1);
