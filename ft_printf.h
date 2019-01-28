@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 00:26:57 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 17:47:56 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 # include <stdarg.h>
 # include "./libft/libft.h"
 
-typedef struct s_conversion_table t_conv;
-
-struct s_conversion_table {
-	char	*name;
-	char	*(*fnc)(/*fuck what do I put here fuck*/);
-	t_conv	*next;
-};
-
 typedef struct	s_vars
 {
 	char	*format;
@@ -36,7 +28,11 @@ typedef struct	s_vars
 	int		precision;
 	int		flags;
 	char	*buf;
+	size_t	buf_len;
+	size_t	buf_i;
 }				t_vars;
+
+typedef void	(*f_array)(t_vars*);
 
 //flags
 # define F_CONV		0x1; //# reqs conversions
