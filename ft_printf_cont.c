@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 21:45:26 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 19:58:20 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 22:55:13 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 		len = ft_strlen(v->buf);
 	}
 	*ret = v->buf;
-//	ft_memdel((void **)&v->buf);
 	ft_memdel((void **)&v);
 	return (len);
 }
