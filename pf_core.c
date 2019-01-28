@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 19:22:18 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 23:04:34 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	core(t_vars *v)
 		}
 		v->format++;
 	}
+//	v->buf = ft_rememalloc(v->buf, v->buf_len, v->len);
 }
