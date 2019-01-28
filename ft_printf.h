@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 19:18:19 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/28 02:58:30 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@
 
 typedef struct	s_vars
 {
-	char	*format;
 	va_list	*args;
-	int		len;
-	int		base;
-	int		padding;
-	int		precision;
-	int		flags;
+	char	*format;
 	char	*buf;
 	size_t	buf_len;
 	size_t	buf_i;
+	int		clen;
+	int		min;
+	int		base;
+	int		pad;
+	int		prec;
+	int		flags;
 }				t_vars;
 
 typedef void	(*f_array)(t_vars*);

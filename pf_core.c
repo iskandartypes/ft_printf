@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 23:04:34 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/28 02:58:32 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ void	core(t_vars *v)
 	{
 		if (*(v->format) == '%')
 		{
+			if (!*(v->format + 1))
+				break ;
 			if (*(v->format + 1) != '%')
-				{ /*do stuff */}
+			{
+				//parse_init(v);
+			}
 			else
 				v->format++;
 		}
@@ -35,4 +39,12 @@ void	core(t_vars *v)
 		v->format++;
 	}
 //	v->buf = ft_rememalloc(v->buf, v->buf_len, v->len);
+}
+
+void	parse_init(t_vars *v, char *f_at)
+{
+	v->flags = 0;
+	v->clen = 0;
+	v->min = 0;
+	if 
 }
