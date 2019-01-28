@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 00:12:56 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 00:24:23 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 23:01:31 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_rememalloc(void *ptr, size_t old_size, size_t new_size)
 	if (ptr)
 	{
 		ret = ft_memcpy(ret, ptr, old_size);
-		ft_memdel(ptr);
+		ft_memdel(&ptr);
 	}
 	return (ret);
 }
