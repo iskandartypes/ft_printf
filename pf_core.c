@@ -6,13 +6,13 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/26 20:14:33 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 19:22:18 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		core(t_vars *v)
+void	core(t_vars *v)
 {
 	while (*(v->format))
 	{
@@ -23,9 +23,15 @@ int		core(t_vars *v)
 			else
 				v->format++;
 		}
-		v->len++;
-		ft_putchar_fd(*(v->format), v->fd);
+		v->buf[v->buf_i] = *(v->format);
+		v->buf_i++;
+		if (v->buf_i == v->buf_len)
+		{
+			if (!(v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_len * 2)))
+				return ;
+			else
+				v->buf_len *= 2;
+		}
 		v->format++;
 	}
-	return (v->len);
 }

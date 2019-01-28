@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/27 17:47:56 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/27 19:18:19 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ typedef void	(*f_array)(t_vars*);
 # define F_MAX		0x1000; //j intmax_t / uintmax_t
 # define F_SIZE		0x2000; //z ssize_t / size_t
 
-int	ft_printf(const char *format, ...);
-int	ft_dprintf(int fd, const char *format, ...);
-int	ft_vprintf(const char *format, va_list ap);
-int	ft_vdprintf(int fd, const char *format, va_list ap);
-int	ft_sprintf(char *str, const char *format, ...);
+int		ft_printf(const char *format, ...);
+int		ft_dprintf(int fd, const char *format, ...);
+int		ft_vprintf(const char *format, va_list ap);
+int		ft_vdprintf(int fd, const char *format, va_list ap);
+int		ft_sprintf(char *str, const char *format, ...);
 
-int	ft_vsprintf(char *str, const char *format, va_list ap);
-int	ft_snprintf(char *str, size_t size, const char *format, ...);
-int	ft_vsnprintf(char *str, size_t size, const char *format, va_list ap);
-int	ft_asprintf(char **ret, const char *format, ...);
-int	ft_vasprintf(char **ret, const char *format, va_list ap);
+int		ft_vsprintf(char *str, const char *format, va_list ap);
+int		ft_snprintf(char *str, size_t size, const char *format, ...);
+int		ft_vsnprintf(char *str, size_t size, const char *format, va_list ap);
+int		ft_asprintf(char **ret, const char *format, ...);
+int		ft_vasprintf(char **ret, const char *format, va_list ap);
 
-int	core(t_vars *v);
+void	core(t_vars *v);
 
 #endif
