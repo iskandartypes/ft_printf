@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 00:30:31 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 03:32:39 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,48 @@ static void	parse_flags_mods(t_vars *v)
 	}
 }
 
-void	test(t_vars *v);
+/*
+** the _ is a bonus base thing I wanted to add up to 16
+** overwrites conversion base if in range, otherwise goes back to default
+*/
 
-static void	parse_init(t_vars *v)
+static void	parse_base_long(t_vars *v)
 {
+	int i;
+
+	i = -1;
+	if (*v->format == '_' && *(++v->format))
+	{
+		v->base = ft_atoi_skip(&v->format);
+		if (v->base > 1 && v->base < 17)
+			i = 0;
+	}
+	if (i && (i = ft_charat("bBbboOxX", *v->format)) > -1)
+		v->base = 2 << (i >> 1);
+	if (i == -1)
+		v->base = 10;
+	if (ft_charat("DOUCS", *v->format) > -1)
+		v->flags |= F_L;
+	if (ft_charat("FBX", *v->format) > -1)
+		v->flags |= F_UP;
+}
+
+static void	parse(t_vars *v)
+{
+	int i;
+
+	i = 0;
 	v->flags = 0;
 	v->clen = 0;
 	v->min = 0;
-	v->prec = 0;
+	v->prec = -1;
+	v->base = 10;
 	parse_flags_mods(v);
-	test(v);	
+	parse_base_long(v);
+	if ((i = ft_charat("dDiibBoOuUxXfFcCsS", *v->format)) > -1 && v->format++)
+		printf("This sure is finding the conversion\n");	//fptrarray[i >> 1](v);
+	else
+		v->format++;
 }
 
 void		core(t_vars *v)
@@ -71,7 +103,7 @@ void		core(t_vars *v)
 				break ;
 			v->format++;
 			if (*v->format != '%')
-				parse_init(v);
+				parse(v);
 		}
 		v->buf[v->buf_i] = *(v->format);
 		v->buf_i++;
@@ -87,10 +119,12 @@ void		core(t_vars *v)
 	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
 }
 
+/*
 void	test(t_vars *f)
 {
 	printf("flags: \n-------\nF_CONV: %d\nF_ZPAD: %d\nF_RPAD: %d\nF_BLANK: %d\nF_SIGN: %d\n", \
 			f->flags & F_CONV, f->flags & F_ZPAD, f->flags & F_RPAD, f->flags & F_BLANK, f->flags & F_SIGN);
-	printf("flags: \n-------\nF_PREC: %d & prec: %d\nF_H: %d\nF_HH: %d\nF_L: %d\nF_LL: %d\nnF_MAX: %d\nnF_SIZE: %d\n", \
+	printf("flags: \n-------\nF_PREC: %d & prec: %d\nF_H: %d\nF_HH: %d\nF_L: %d\nF_LL: %d\nF_MAX: %d\nF_SIZE: %d\n\n", \
 			f->flags & F_PREC, f->prec, f->flags & F_H, f->flags & F_HH, f->flags & F_L, f->flags & F_LL, f->flags & F_MAX, f->flags & F_SIZE);
 }
+*/

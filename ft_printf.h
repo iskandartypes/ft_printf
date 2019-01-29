@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/28 23:57:07 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 03:02:46 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,23 @@ typedef struct	s_vars
 typedef void	(*f_array)(t_vars*);
 
 //flags
-# define F_CONV		0x1 //# reqs conversions 1 << 0
-# define F_ZPAD		0x2 //0 pads w/zero instead of blank (ignore if precis.)
-# define F_RPAD		0x4 //- pads on right (left adjusted for min width). Overrides 0.
-# define F_BLANK	0x8 //' ' leaves blank before positive number
-# define F_SIGN		0x10 //+ all signed nums get a sign (so -17/+17). Overrides ' '
-# define F_MINWIDTH	0x20 //#s specifying min field width 1 << 5
-# define F_PREC		0x40 //. if no #s after presumed 0; min digits for diouxX,
+# define F_CONV		0x1		//# reqs conversions 1 << 0
+# define F_ZPAD		0x2		//0 pads w/zero instead of blank (ignore if precis.)
+# define F_RPAD		0x4		//- pads on right (left adjusted for min width). Overrides 0.
+# define F_BLANK	0x8		//' ' leaves blank before positive number
+# define F_SIGN		0x10	//+ all signed nums get a sign (so -17/+17). Overrides ' '
+# define F_MINWIDTH	0x20	//#s specifying min field width 1 << 5
+# define F_PREC		0x40	//. if no #s after presumed 0; min digits for diouxX,
 //								# of digits after . for double, # sig digs for sci,
 //								# of chars in string (from front)
-# define F_BASE		0x80 //_, added flag for base
-# define F_H		0x100 //h short / unsigned short (all formatted di / ouxX)
-# define F_L		0x200 //l long / unsigned long
-# define F_MAX		0x400 //j intmax_t / uintmax_t i << 10
-# define F_SIZE		0x800 //z ssize_t / size_t
-# define F_LL		0x1000 //ll long long / unsigned long long
-# define F_HH		0x2000 //hh signed char / unsigned char
+# define F_BASE		0x80	//_, added flag for base
+# define F_H		0x100	//h short / unsigned short (all formatted di / ouxX)
+# define F_L		0x200	//l long / unsigned long
+# define F_MAX		0x400	//j intmax_t / uintmax_t i << 10
+# define F_SIZE		0x800	//z ssize_t / size_t
+# define F_LL		0x1000	//ll long long / unsigned long long
+# define F_HH		0x2000	//hh signed char / unsigned char
+# define F_UP		0x4000	//FBX for uppercase
 
 int		ft_printf(const char *format, ...);
 int		ft_dprintf(int fd, const char *format, ...);
