@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 00:07:26 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 00:30:31 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ static void	parse_flags_mods(t_vars *v)
 	int	f;
 
 	f = -1;
-	printf("char at parse_flags_mods: %c\n", *v->format);
 	while ((f = ft_charat("#0- +", *v->format)) > -1 && ++v->format)
-	{
 		v->flags |= (1 << f);
-		printf("is the charat executing?\n");
-	}
 	(v->flags & F_RPAD) ? v->flags &= ~F_ZPAD : 0;
 	(v->flags & F_SIGN) ? v->flags &= ~F_BLANK : 0;
 	if (*v->format >= '0' && *v->format <= '9')
@@ -95,4 +91,6 @@ void	test(t_vars *f)
 {
 	printf("flags: \n-------\nF_CONV: %d\nF_ZPAD: %d\nF_RPAD: %d\nF_BLANK: %d\nF_SIGN: %d\n", \
 			f->flags & F_CONV, f->flags & F_ZPAD, f->flags & F_RPAD, f->flags & F_BLANK, f->flags & F_SIGN);
+	printf("flags: \n-------\nF_PREC: %d & prec: %d\nF_H: %d\nF_HH: %d\nF_L: %d\nF_LL: %d\nnF_MAX: %d\nnF_SIZE: %d\n", \
+			f->flags & F_PREC, f->prec, f->flags & F_H, f->flags & F_HH, f->flags & F_L, f->flags & F_LL, f->flags & F_MAX, f->flags & F_SIZE);
 }
