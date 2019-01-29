@@ -6,10 +6,11 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/28 22:21:31 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 00:07:26 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "ft_printf.h"
 
 /*
@@ -25,8 +26,12 @@ static void	parse_flags_mods(t_vars *v)
 	int	f;
 
 	f = -1;
+	printf("char at parse_flags_mods: %c\n", *v->format);
 	while ((f = ft_charat("#0- +", *v->format)) > -1 && ++v->format)
-		p->flags |= (1 << f);
+	{
+		v->flags |= (1 << f);
+		printf("is the charat executing?\n");
+	}
 	(v->flags & F_RPAD) ? v->flags &= ~F_ZPAD : 0;
 	(v->flags & F_SIGN) ? v->flags &= ~F_BLANK : 0;
 	if (*v->format >= '0' && *v->format <= '9')
@@ -48,13 +53,16 @@ static void	parse_flags_mods(t_vars *v)
 	}
 }
 
+void	test(t_vars *v);
+
 static void	parse_init(t_vars *v)
 {
 	v->flags = 0;
 	v->clen = 0;
 	v->min = 0;
 	v->prec = 0;
-	parse_flags_mods(v); 
+	parse_flags_mods(v);
+	test(v);	
 }
 
 void		core(t_vars *v)
@@ -65,12 +73,9 @@ void		core(t_vars *v)
 		{
 			if (!*(v->format + 1))
 				break ;
-			if (*(v->format + 1) != '%')
-			{
-				//parse_init(v);
-			}
-			else
-				v->format++;
+			v->format++;
+			if (*v->format != '%')
+				parse_init(v);
 		}
 		v->buf[v->buf_i] = *(v->format);
 		v->buf_i++;
@@ -83,5 +88,11 @@ void		core(t_vars *v)
 		}
 		v->format++;
 	}
-//	v->buf = ft_rememalloc(v->buf, v->buf_len, v->len);
+	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
+}
+
+void	test(t_vars *f)
+{
+	printf("flags: \n-------\nF_CONV: %d\nF_ZPAD: %d\nF_RPAD: %d\nF_BLANK: %d\nF_SIGN: %d\n", \
+			f->flags & F_CONV, f->flags & F_ZPAD, f->flags & F_RPAD, f->flags & F_BLANK, f->flags & F_SIGN);
 }
