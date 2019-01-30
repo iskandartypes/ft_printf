@@ -6,11 +6,10 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 03:32:39 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 15:55:14 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "ft_printf.h"
 
 /*
@@ -88,7 +87,8 @@ static void	parse(t_vars *v)
 	parse_flags_mods(v);
 	parse_base_long(v);
 	if ((i = ft_charat("dDiibBoOuUxXfFcCsS", *v->format)) > -1 && v->format++)
-		printf("This sure is finding the conversion\n");	//fptrarray[i >> 1](v);
+		//printf("This sure is finding the conversion\n");
+		v->ftab[i >> 1](v);
 	else
 		v->format++;
 }
@@ -117,6 +117,22 @@ void		core(t_vars *v)
 		v->format++;
 	}
 	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
+}
+
+void		make_ftab(t_vars *v)
+{
+	int i;
+
+	if (!(v->ftab = malloc(sizeof(*v->ftab) * NCONV)))
+		return ;
+	i = 0;
+	while (i < 2)
+		v->ftab[i++] = &pf_int;
+	while (i < NUMCONV)
+		v->ftab[i++] = &pf_uint;
+	v->ftab[i++] = &pf_float;
+	v->ftab[i++] = &pf_char;
+	v->ftab[i++] = &pf_str;
 }
 
 /*

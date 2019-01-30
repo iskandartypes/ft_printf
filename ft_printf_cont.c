@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 21:45:26 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 00:12:09 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 15:32:35 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 	len = -1;
 	v->format = (char *)format;
 	v->args = (va_list *)&ap;
+	make_ftab(v);
+	if (!(v->ftab))
+		return (-1);
 	if ((v->buf = ft_strnew(INIT_BUF - 1)))
 	{
 		v->buf_i = 0;
@@ -91,6 +94,7 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 		len = v->buf_i - 1;
 	}
 	*ret = v->buf;
+	ft_memdel((void **)&v->ftab);
 	ft_memdel((void **)&v);
 	return (len);
 }

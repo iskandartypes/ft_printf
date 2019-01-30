@@ -6,7 +6,7 @@
 #    By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 19:40:37 by ikourkji          #+#    #+#              #
-#    Updated: 2019/01/29 00:09:12 by ikourkji         ###   ########.fr        #
+#    Updated: 2019/01/29 16:10:42 by ikourkji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ LFT = libft/libft.a
 
 TST = test.c
 
-DFLAGS = -g -fsanitize=address
+DFLAGS = -g
+
+FS = -fsanitize=address
 
 all: $(NAME)
 

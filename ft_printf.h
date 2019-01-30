@@ -6,34 +6,19 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 03:02:46 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/29 15:54:00 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# include <stdio.h> //for testing
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
 # include "./libft/libft.h"
-
-typedef struct	s_vars
-{
-	va_list	*args;
-	char	*format;
-	char	*buf;
-	size_t	buf_len;
-	size_t	buf_i;
-	int		flags;
-	int		clen;
-	int		min;
-	int		base;
-	int		pad;
-	int		prec;
-}				t_vars;
-
-typedef void	(*f_array)(t_vars*);
 
 //flags
 # define F_CONV		0x1		//# reqs conversions 1 << 0
@@ -54,6 +39,27 @@ typedef void	(*f_array)(t_vars*);
 # define F_HH		0x2000	//hh signed char / unsigned char
 # define F_UP		0x4000	//FBX for uppercase
 
+# define NCONV		9
+# define NUMCONV	6
+
+typedef struct s_vars	t_vars;
+typedef void	(*func_t)(t_vars*);
+struct	s_vars
+{
+	va_list	*args;
+	char	*format;
+	char	*buf;
+	func_t	*ftab;
+	size_t	buf_len;
+	size_t	buf_i;
+	int		flags;
+	int		clen;
+	int		min;
+	int		base;
+	int		pad;
+	int		prec;
+};
+
 int		ft_printf(const char *format, ...);
 int		ft_dprintf(int fd, const char *format, ...);
 int		ft_vprintf(const char *format, va_list ap);
@@ -67,5 +73,11 @@ int		ft_asprintf(char **ret, const char *format, ...);
 int		ft_vasprintf(char **ret, const char *format, va_list ap);
 
 void	core(t_vars *v);
+void	make_ftab(t_vars *v);
 
+void	pf_int(t_vars *v);
+void	pf_uint(t_vars *v);
+void	pf_float(t_vars *v);
+void	pf_char(t_vars *v);
+void	pf_str(t_vars *v);
 #endif
