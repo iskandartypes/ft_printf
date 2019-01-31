@@ -6,13 +6,13 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 15:45:00 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 00:49:43 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 02:39:18 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	int_add(t_vars *v, intmax_t n)
+static void			int_add(t_vars *v, intmax_t n)
 {
 	char	*tmp;
 	int		pad;
@@ -41,22 +41,35 @@ static void	int_add(t_vars *v, intmax_t n)
 	free(tmp - v->clen);
 }
 
-void		pf_int(t_vars *v)
+void				pf_int(t_vars *v)
 {
 	intmax_t	n;
 
 	n = 0;
-	(v->flags & F_L) && (v->flags & F_LL) ? v->flags &= ~F_L: 0;
-	!(v->flags & F_ALL) ? n = (intmax_t)va_arg(*v->args, int) : 0;
-	v->flags & F_H ? n = (intmax_t)va_arg(*v->args, int) : 0;
-	v->flags & F_L ? n = (intmax_t)va_arg(*v->args, long) : 0;
-	v->flags & F_LL ? n = (intmax_t)va_arg(*v->args, long long) : 0;
-	v->flags & F_SIZE ? n = (intmax_t)va_arg(*v->args, ssize_t) : 0;
-	v->flags & F_MAX ? n = (intmax_t)va_arg(*v->args, intmax_t) : 0;
+	(v->flags & F_L) && (v->flags & F_LL) ? v->flags &= ~F_L : 0;
+	!(v->flags & F_ALL) ? n = (intmax_t)va_arg(v->args, int) : 0;
+	v->flags & F_H ? n = (intmax_t)va_arg(v->args, int) : 0;
+	v->flags & F_L ? n = (intmax_t)va_arg(v->args, long) : 0;
+	v->flags & F_LL ? n = (intmax_t)va_arg(v->args, long long) : 0;
+	v->flags & F_SIZE ? n = (intmax_t)va_arg(v->args, ssize_t) : 0;
+	v->flags & F_MAX ? n = (intmax_t)va_arg(v->args, intmax_t) : 0;
 	int_add(v, n);
 }
 
-static void	uint_add(t_vars *v, uintmax_t n)
+static inline void	conv_print(t_vars *v)
+{
+	if (v->flags & F_CONV)
+	{
+		if (v->base == 2 || v->base == 8 || v->base == 16)
+			pf_placechar(v, '0');
+		if (v->base == 2)
+			pf_placechar(v, (v->flags & F_UP) ? 'B' : 'b');
+		else if (v->base == 16)
+			pf_placechar(v, (v->flags & F_UP) ? 'X' : 'x');
+	}
+}
+
+static void			uint_add(t_vars *v, uintmax_t n)
 {
 	char	*tmp;
 	int		pad;
@@ -64,12 +77,18 @@ static void	uint_add(t_vars *v, uintmax_t n)
 
 	if (!(tmp = pf_uitoa_base(n, v->base, v->flags & F_UP)))
 		return ;
-	printf("tmp: %s\n", tmp);//printf here!
 	v->clen = ft_strlen(tmp);
 	zpad = v->prec - v->clen;
 	pad = v->min - (zpad > 0 ? v->prec : v->clen);
-	while (!(v->flags & F_RPAD) && pad-- > 0)
-		pf_placechar(v, (v->flags & F_ZPAD ? '0' : ' '));
+	if (v->flags & F_CONV)
+	{
+		pad -= v->base == 8 ? 1 : 0;
+		pad -= v->base == 2 || v->base == 16 ? 2 : 0;
+	}
+	(v->flags & F_ZPAD) ? zpad = pad : 0;
+	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && pad-- > 0)
+		pf_placechar(v, ' ');
+	conv_print(v);
 	while (zpad-- > 0)
 		pf_placechar(v, '0');
 	while (*tmp)
@@ -88,32 +107,17 @@ static void	uint_add(t_vars *v, uintmax_t n)
 ** v->flags & F_HH ? n = (uintmax_t)va_arg(*v->args, unsigned char) : 0;
 */
 
-void		pf_uint(t_vars *v)
+void				pf_uint(t_vars *v)
 {
 	uintmax_t	n;
 
 	n = 0;
-	(v->flags & F_L) && (v->flags & F_LL) ? v->flags &= ~F_L: 0;
-	(!(v->flags & F_ALL)) ? n = (uintmax_t)va_arg(*v->args, unsigned int) : 0;
-	v->flags & F_H ? n = (uintmax_t)va_arg(*v->args, unsigned int) : 0;
-	v->flags & F_L ? n = (uintmax_t)va_arg(*v->args, unsigned long) : 0;
-	v->flags & F_LL ? n = (uintmax_t)va_arg(*v->args, unsigned long long) : 0;
-	v->flags & F_SIZE ? n = (uintmax_t)va_arg(*v->args, size_t) : 0;
-	v->flags & F_MAX ? n = (uintmax_t)va_arg(*v->args, uintmax_t) : 0;
+	(v->flags & F_L) && (v->flags & F_LL) ? v->flags &= ~F_L : 0;
+	(!(v->flags & F_ALL)) ? n = (uintmax_t)va_arg(v->args, unsigned int) : 0;
+	v->flags & F_H ? n = (uintmax_t)va_arg(v->args, unsigned int) : 0;
+	v->flags & F_L ? n = (uintmax_t)va_arg(v->args, unsigned long) : 0;
+	v->flags & F_LL ? n = (uintmax_t)va_arg(v->args, unsigned long long) : 0;
+	v->flags & F_SIZE ? n = (uintmax_t)va_arg(v->args, size_t) : 0;
+	v->flags & F_MAX ? n = (uintmax_t)va_arg(v->args, uintmax_t) : 0;
 	uint_add(v, n);
-}
-
-void	pf_float(t_vars *v)
-{
-	printf("this is for floating nums\n");
-}
-
-void	pf_char(t_vars *v)
-{
-	printf("this is for chars\n");
-}
-
-void	pf_str(t_vars *v)
-{
-	printf("this is for strs\n");
 }

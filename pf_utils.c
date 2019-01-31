@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 00:49:55 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 01:27:42 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*pf_uitoa_base(uintmax_t n, int base, int up)
 	tmp = n;
 	len = 1;
 	b = (up ? "0123456789ABCDEF" : "0123456789abcdef");
-	printf("num: %jd\n", n); //printf here!
 	while (tmp >= base && len++)
 		tmp /= base;
 	if (!(ret = ft_strnew(len)))

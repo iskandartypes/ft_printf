@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 00:39:38 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 02:10:24 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 # define F_SIZE		0x800	//z ssize_t / size_t
 # define F_LL		0x1000	//ll long long / unsigned long long
 # define F_HH		0x2000	//hh signed char / unsigned char
-# define F_UP		0x4000	//FBX for uppercase
 # define F_ALL		0x3f00	//all f_h - f_hh
+# define F_UP		0x4000	//FBX for uppercase
 
 # define NCONV		9
 # define ICONV		2
@@ -48,7 +48,7 @@ typedef struct s_vars	t_vars;
 typedef void	(*func_t)(t_vars*);
 struct	s_vars
 {
-	va_list	*args;
+	va_list	args;
 	char	*format;
 	char	*buf;
 	func_t	*ftab;
