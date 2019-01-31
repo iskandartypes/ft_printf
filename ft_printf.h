@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 02:10:24 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 02:47:53 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@
 # define UICONV		4
 
 typedef struct s_vars	t_vars;
-typedef void	(*func_t)(t_vars*);
+typedef void	(*t_func)(t_vars*);
 struct	s_vars
 {
 	va_list	args;
 	char	*format;
 	char	*buf;
-	func_t	*ftab;
+	t_func	*ftab;
 	size_t	buf_len;
 	size_t	buf_i;
 	int		flags;

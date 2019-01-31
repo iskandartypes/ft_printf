@@ -6,9 +6,11 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 02:36:24 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 02:48:50 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 void	pf_float(t_vars *v)
 {
