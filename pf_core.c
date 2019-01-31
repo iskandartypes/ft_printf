@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 15:55:14 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/30 21:16:55 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	parse_flags_mods(t_vars *v)
 		v->flags |= (1 << f);
 	(v->flags & F_RPAD) ? v->flags &= ~F_ZPAD : 0;
 	(v->flags & F_SIGN) ? v->flags &= ~F_BLANK : 0;
-	if (*v->format >= '0' && *v->format <= '9')
+	if (*v->format >= '1' && *v->format <= '9')
 		v->min = ft_atoi_skip(&v->format);
 	if (*v->format == '.')
 	{
@@ -82,12 +82,11 @@ static void	parse(t_vars *v)
 	v->flags = 0;
 	v->clen = 0;
 	v->min = 0;
-	v->prec = -1;
+	v->prec = 0;
 	v->base = 10;
 	parse_flags_mods(v);
 	parse_base_long(v);
 	if ((i = ft_charat("dDiibBoOuUxXfFcCsS", *v->format)) > -1 && v->format++)
-		//printf("This sure is finding the conversion\n");
 		v->ftab[i >> 1](v);
 	else
 		v->format++;
@@ -105,15 +104,9 @@ void		core(t_vars *v)
 			if (*v->format != '%')
 				parse(v);
 		}
-		v->buf[v->buf_i] = *(v->format);
-		v->buf_i++;
-		if (v->buf_i == v->buf_len)
-		{
-			if (!(v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_len * 2)))
-				return ;
-			else
-				v->buf_len *= 2;
-		}
+		pf_placechar(v, *v->format);
+		if (!(v->buf))
+			return ;
 		v->format++;
 	}
 	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
@@ -126,9 +119,9 @@ void		make_ftab(t_vars *v)
 	if (!(v->ftab = malloc(sizeof(*v->ftab) * NCONV)))
 		return ;
 	i = 0;
-	while (i < 2)
+	while (i < ICONV)
 		v->ftab[i++] = &pf_int;
-	while (i < NUMCONV)
+	while (i < (ICONV + UICONV))
 		v->ftab[i++] = &pf_uint;
 	v->ftab[i++] = &pf_float;
 	v->ftab[i++] = &pf_char;

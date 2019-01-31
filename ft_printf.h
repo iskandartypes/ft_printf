@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/29 15:54:00 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/30 21:27:54 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define F_RPAD		0x4		//- pads on right (left adjusted for min width). Overrides 0.
 # define F_BLANK	0x8		//' ' leaves blank before positive number
 # define F_SIGN		0x10	//+ all signed nums get a sign (so -17/+17). Overrides ' '
-# define F_MINWIDTH	0x20	//#s specifying min field width 1 << 5
+# define F_MINWIDTH	0x20	//#s specifying min field width 1 << 5 UNUSED
 # define F_PREC		0x40	//. if no #s after presumed 0; min digits for diouxX,
 //								# of digits after . for double, # sig digs for sci,
 //								# of chars in string (from front)
@@ -40,7 +40,8 @@
 # define F_UP		0x4000	//FBX for uppercase
 
 # define NCONV		9
-# define NUMCONV	6
+# define ICONV		2
+# define UICONV		4
 
 typedef struct s_vars	t_vars;
 typedef void	(*func_t)(t_vars*);
@@ -80,4 +81,8 @@ void	pf_uint(t_vars *v);
 void	pf_float(t_vars *v);
 void	pf_char(t_vars *v);
 void	pf_str(t_vars *v);
+
+void	pf_placechar(t_vars *v, char c);
+char	*pf_itoa_base(intmax_t n, int base, int up);
+char	*pf_uitoa_base(uintmax_t n, int base, int up);
 #endif
