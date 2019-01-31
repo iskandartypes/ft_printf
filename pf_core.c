@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/30 21:16:55 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/30 23:59:28 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	parse_flags_mods(t_vars *v)
 		v->prec = ft_atoi_skip(&v->format);
 		v->flags |= F_PREC;
 	}
+	(v->flags & F_PREC) ? v->flags &= ~F_ZPAD : 0;
 	if ((f = ft_charat("hljzL", *v->format)) > -1)
 	{
 		v->flags |= (1 << (f + 8));

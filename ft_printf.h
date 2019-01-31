@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/30 21:27:54 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 00:39:38 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define F_LL		0x1000	//ll long long / unsigned long long
 # define F_HH		0x2000	//hh signed char / unsigned char
 # define F_UP		0x4000	//FBX for uppercase
+# define F_ALL		0x3f00	//all f_h - f_hh
 
 # define NCONV		9
 # define ICONV		2

@@ -6,7 +6,7 @@
 #    By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 19:40:37 by ikourkji          #+#    #+#              #
-#    Updated: 2019/01/29 16:10:42 by ikourkji         ###   ########.fr        #
+#    Updated: 2019/01/31 00:28:23 by ikourkji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,4 +45,4 @@ test:
 	gcc $(TST) $(SRC) $(LFT)
 
 testd:
-	gcc $(DFLAGS) $(TST) $(SRC) $(LFT)
+	gcc $(DFLAGS) $(FS) $(TST) $(SRC) $(LFT)
