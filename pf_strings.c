@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 05:04:42 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/01/31 05:12:02 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	pf_float(t_vars *v)
 {
-	f->flags & F_PREC ? 0 : f->prec = 6;
+	(!(v->flags & F_PREC)) ? v->prec = 6 : 0;
 	printf("this is for floating nums\n");
 }
 
