@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 05:12:02 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/01 10:23:01 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,28 @@ void	pf_float(t_vars *v)
 	printf("this is for floating nums\n");
 }
 
-void	pf_char(t_vars *v)
+/*
+** this doesn't print unicode sequences, bc that is technically incorrect
+** wchars can have any encoding, not just unicode
+*/
+
+static void	pf_wchar(t_vars *v, wchar_t s)
+{
+	wchar_t	c;
+
+	c = (s) ? s : va_arg(v->args, unsigned int);
+	v->clen = pf_wcharlen(c);
+	printf("len: %d\n", v->clen);
+	while (v->clen--)
+		pf_placechar(v, (char)(c >> v->clen));
+}
+
+void		pf_char(t_vars *v)
 {
 	unsigned char	c;
 
 	if (v->flags & F_L)
-	{}
+		pf_wchar(v, '\0');
 	else
 	{
 		c = va_arg(v->args, int);
@@ -37,13 +53,22 @@ void	pf_char(t_vars *v)
 	}
 }
 
+static void	pf_wstr(t_vars *v)
+{
+	wchar_t	*s;
+
+	s = va_arg(v->args, wchar_t*);
+	while (*s)
+		pf_wchar(v, *s++);
+}
+
 void	pf_str(t_vars *v)
 {
 	char	*s;
 	int		i;
 
 	if (v->flags & F_L)
-	{}
+		pf_wstr(v);
 	else
 	{
 		s = va_arg(v->args, char*);

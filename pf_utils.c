@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 01:27:42 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/01 10:28:08 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ void	pf_placechar(t_vars *v, char c)
 			v->buf_len *= 2;
 	}
 }
+
+/*
+** MB_CUR_MAX is defined in stdlib.h as the max bytes to represent a wchar
+** of course, this doesn't matter because I'm casting to an int, so
+** pragmatically, !(i > 4)
+*/
+
+int		pf_wcharlen(wchar_t c)
+{
+	int	i;
+
+	i = 1;
+	while (i < 5)
+	{
+		if (!(c >> (8 * i)))
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
 /*
 char	*pf_itoa_base(intmax_t n, int base, int up)
 {
