@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 10:46:00 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/02 12:20:09 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,17 @@ void	make_ftab(t_vars *v);
 
 void	pf_int(t_vars *v);
 void	pf_uint(t_vars *v);
-void	pf_float(t_vars *v);
+
 void	pf_char(t_vars *v);
 void	pf_str(t_vars *v);
 
+void	pf_float(t_vars *v);
+
+int		pf_uclen(wchar_t c);
+int		pf_wclen(wchar_t c);
+int		pf_ustrlen(wchar_t *s);
+int		pf_wstrlen(wchar_t *s);
+
 void	pf_placechar(t_vars *v, char c);
-int		pf_ucharlen(wchar_t c);
-int		pf_wcharlen(wchar_t c);
-char	*pf_itoa_base(intmax_t n, int base, int up);
 char	*pf_uitoa_base(uintmax_t n, int base, int up);
 #endif

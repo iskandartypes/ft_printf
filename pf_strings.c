@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 10:45:37 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/02 12:22:09 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,48 +18,52 @@ void	pf_float(t_vars *v)
 	printf("this is for floating nums\n");
 }
 
-static void	pf_uchar(t_vars *v, wchar_t s)
+static int	pf_uchar(t_vars *v, wchar_t c)
 {
-	wchar_t	c;
 	wchar_t tmp;
+	int		len;
 
-	c = (s) ? s : va_arg(v->args, unsigned long int);
-	v->clen = pf_wcharlen(c);
-	printf("len: %d\n", v->clen);
-
+	v->clen = pf_uclen(c);
+	len = v->clen;
+	if (v->clen == 1 && v->clen--)
+		pf_placechar(v, (char)c);
+	else
+		tmp = c >> (6 * (--v->clen));
+	v->clen == 1 ? pf_placechar(v, (char)((tmp & 0x1F) | 0xC0)) : 0;
+	v->clen == 2 ? pf_placechar(v, (char)((tmp & 0xF) | 0xE0)) : 0;
+	v->clen == 3 ? pf_placechar(v, (char)((tmp & 0x7) | 0xF0)) : 0;
+	while (--v->clen > -1)
+		pf_placechar(v, (char)((c >> (6 * v->clen) & 0x3F) | 0x80));
+	return (len);
 }
 
 /*
-** this doesn't print unicode sequences by default
+** this doesn't print UTF-8 sequences by default
 ** because that is technically incorrect
-** wchars can have any encoding, not just unicode
-** but, passed # (conversion operator), prints wchars as unicode
+** wchars can have any encoding
+** but, passed # (conversion operator), prints wchars as UTF-8
 */
 
-static void	pf_wchar(t_vars *v, wchar_t s)
+static int	pf_wchar(t_vars *v, wchar_t s)
 {
 	wchar_t	c;
-	wchar_t	tmp;
+	int		len;
 
 	c = (s) ? s : va_arg(v->args, unsigned long int);
-	v->clen = pf_wcharlen(c);
-	printf("len: %d\n", v->clen);
+	v->clen = (v->flags & F_CONV) ? 1 : pf_wclen(c);
+	len = v->clen;
+	v->min -= v->clen;
+	if (!(v->flags & F_RPAD))
+		while (v->min-- > 0)
+			pf_placechar(v, v->flags & F_ZPAD ? '0' : ' ');
 	if (v->flags & F_CONV)
-	{
-		v->clen = pf_ucharlen(c);
-		if (v->clen == 1 && v->clen--)
-			pf_placechar(v, (char)c);
-		else
-			tmp = c >> (6 * (--v->clen));
-		v->clen == 1 ? pf_placechar(v, (char)((tmp & 0x1F) | 0xC0)) : 0;
-		v->clen == 2 ? pf_placechar(v, (char)((tmp & 0xF) | 0xE0)) : 0;
-		v->clen == 3 ? pf_placechar(v, (char)((tmp & 0x7) | 0xF)) : 0;
-		while (--v->clen)
-			pf_placechar(v, (char)((c >> (6 * v->clen) & 0x3F) | 0x80));
-	}
+		len = pf_uchar(v, c);
 	else
 		while (v->clen--)
 			pf_placechar(v, (char)(c >> (v->clen << 3)));
+	while (v->min-- > 0)
+		pf_placechar(v, ' ');
+	return (len);
 }
 
 void		pf_char(t_vars *v)
@@ -84,10 +88,20 @@ void		pf_char(t_vars *v)
 static void	pf_wstr(t_vars *v)
 {
 	wchar_t	*s;
+	int		len;
 
 	s = va_arg(v->args, wchar_t*);
-	while (*s)
-		pf_wchar(v, *s++);
+	v->clen = (v->flags & F_CONV) ? pf_ustrlen(s) : pf_wstrlen(s);
+	(v->flags & F_PREC) && (v->clen > v->prec) ? v->clen = v->prec : 0;
+	v->min -= v->clen;
+	if (!(v->flags & F_RPAD))
+		while (v->min-- > 0)
+			pf_placechar(v, v->flags & F_ZPAD ? '0' : ' ');
+	len = 0;
+	while ((len + (v->flags & F_CONV ? pf_uclen(*s) : pf_wclen(*s))) < v->clen)
+		len += pf_wchar(v, *(s++));
+	while (v->min-- > 0)
+		pf_placechar(v, ' ');
 }
 
 void	pf_str(t_vars *v)

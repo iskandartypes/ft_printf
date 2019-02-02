@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 10:47:18 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/02 12:19:16 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,60 +26,6 @@ void	pf_placechar(t_vars *v, char c)
 	}
 }
 
-int		pf_ucharlen(wchar_t c)
-{
-	if (c & 0x1F0000)
-		return (4);
-	if (c & 0xF800)
-		return (3);
-	if (c & 0x780)
-		return (2);
-   return (1);
-}
-
-/*
-** MB_CUR_MAX is defined in stdlib.h as the max bytes to represent a wchar
-** of course, this doesn't matter because I'm casting to an int, so
-** pragmatically, !(i > 4)
-*/
-
-int		pf_wcharlen(wchar_t c)
-{
-	int	i;
-
-	i = 1;
-	while (i < 5)
-	{
-		if (!(c >> (8 * i)))
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-/*
-char	*pf_itoa_base(intmax_t n, int base, int up)
-{
-	char	*ret;
-	char	*tmp;
-
-	ret = 0;
-	tmp = 0;
-	if (n < 0)
-	{
-		if (!(ret = ft_strnew(1)))
-			return (0);
-		ret[0] = '-';
-		if (!(tmp = pf_uitoa_base((uintmax_t)(n * -1), base, up)))
-			return (0);
-		ret = ft_strjoindel(ret, tmp);
-		free(tmp);
-	}
-	else
-		ret = pf_uitoa_base((uintmax_t)(n * -1), base, up);
-	return (ret);
-}
-*/
 char	*pf_uitoa_base(uintmax_t n, int base, int up)
 {
 	char		*ret;
