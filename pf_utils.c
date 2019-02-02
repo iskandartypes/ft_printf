@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/01 10:28:08 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/02 10:47:18 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	pf_placechar(t_vars *v, char c)
 {
+	printf("that block in hex: %#x\n", c);
 	v->buf[v->buf_i] = c;
 	v->buf_i++;
 	if (v->buf_i == v->buf_len)
@@ -23,6 +24,17 @@ void	pf_placechar(t_vars *v, char c)
 		else
 			v->buf_len *= 2;
 	}
+}
+
+int		pf_ucharlen(wchar_t c)
+{
+	if (c & 0x1F0000)
+		return (4);
+	if (c & 0xF800)
+		return (3);
+	if (c & 0x780)
+		return (2);
+   return (1);
 }
 
 /*
