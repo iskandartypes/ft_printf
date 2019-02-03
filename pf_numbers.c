@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 15:45:00 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 09:16:40 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 11:50:27 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void				pf_int(t_vars *v)
 	v->flags & F_L ? n = (intmax_t)(long)va_arg(v->args, long) : 0;
 	v->flags & F_LL ? n = (intmax_t)(long long)va_arg(v->args, long long) : 0;
 	v->flags & F_SIZE ? n = (intmax_t)(ssize_t)va_arg(v->args, ssize_t) : 0;
-	v->flags & F_MAX ? n = (intmax_t)va_arg(v->args, intmax_t) : 0;
+	v->flags & F_MAX ? n = va_arg(v->args, intmax_t) : 0;
 	ng = (n < 0) ? -1 : 1;
 	ng == -1 ? v->flags &= ~F_BLANK & ~F_SIGN : 0;
 	prec0 = (v->flags & F_PREC) && v->prec == 0 && n == 0;
@@ -75,7 +75,7 @@ static inline void	conv_print(t_vars *v)
 	}
 }
 
-static void			uint_add(t_vars *v, uintmax_t n, int prec0)
+void			pf_uint_add(t_vars *v, uintmax_t n, int prec0)
 {
 	char	*tmp;
 	int		zpad;
@@ -94,7 +94,7 @@ static void			uint_add(t_vars *v, uintmax_t n, int prec0)
 	(v->flags & F_ZPAD) ? zpad = v->pad : 0;
 	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && v->pad-- > 0)
 		pf_placechar(v, ' ');
-	(n != 0) ? conv_print(v) : 0;
+	(n != 0 || v->flags & F_PTR) ? conv_print(v) : 0;
 	while (zpad-- > 0)
 		pf_placechar(v, '0');
 	while (*tmp && !prec0)
@@ -134,5 +134,5 @@ void				pf_uint(t_vars *v)
 	v->flags & F_MAX ? n = va_arg(v->args, uintmax_t) : 0;
 	(v->base == 8 && v->flags & F_CONV && n == 0) ? v->prec++ : 0;
 	prec0 = (v->flags & F_PREC) && v->prec == 0 && n == 0;
-	uint_add(v, n, prec0);
+	pf_uint_add(v, n, prec0);
 }

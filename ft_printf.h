@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 09:45:56 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 11:49:28 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define F_RPAD		0x4		//- pads on right (left adjusted for min width). Overrides 0.
 # define F_BLANK	0x8		//' ' leaves blank before positive number
 # define F_SIGN		0x10	//+ all signed nums get a sign (so -17/+17). Overrides ' '
-# define F_MINWIDTH	0x20	//#s specifying min field width 1 << 5 UNUSED
+# define F_PTR		0x20	//  Now ptrflag!   #s specifying min field width 1 << 5 
 # define F_PREC		0x40	//. if no #s after presumed 0; min digits for diouxX,
 //								# of digits after . for double, # sig digs for sci,
 //								# of chars in string (from front)
@@ -79,12 +79,14 @@ void	make_ftab(t_vars *v);
 
 void	pf_int(t_vars *v);
 void	pf_uint(t_vars *v);
+void	pf_uint_add(t_vars *v, uintmax_t n, int prec0);
 
 void	pf_char(t_vars *v);
 void	pf_str(t_vars *v);
 
 void	pf_float(t_vars *v);
 void	pf_pct(t_vars *v);
+void	pf_ptr(t_vars *v);
 
 int		pf_uclen(wchar_t c);
 int		pf_wclen(wchar_t c);
