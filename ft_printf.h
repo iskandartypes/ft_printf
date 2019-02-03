@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 12:20:09 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 04:30:33 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define F_ALL		0x3f00	//all f_h - f_hh
 # define F_UP		0x4000	//FBX for uppercase
 
-# define NCONV		9
+# define NCONV		10
 # define ICONV		2
 # define UICONV		4
 
@@ -84,6 +84,7 @@ void	pf_char(t_vars *v);
 void	pf_str(t_vars *v);
 
 void	pf_float(t_vars *v);
+void	pf_pct(t_vars *v);
 
 int		pf_uclen(wchar_t c);
 int		pf_wclen(wchar_t c);
@@ -91,5 +92,6 @@ int		pf_ustrlen(wchar_t *s);
 int		pf_wstrlen(wchar_t *s);
 
 void	pf_placechar(t_vars *v, char c);
+void	pf_putnull(t_vars *v);
 char	*pf_uitoa_base(uintmax_t n, int base, int up);
 #endif

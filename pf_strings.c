@@ -6,17 +6,11 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 12:22:09 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 04:36:31 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	pf_float(t_vars *v)
-{
-	(!(v->flags & F_PREC)) ? v->prec = 6 : 0;
-	printf("this is for floating nums\n");
-}
 
 static int	pf_uchar(t_vars *v, wchar_t c)
 {
@@ -91,6 +85,11 @@ static void	pf_wstr(t_vars *v)
 	int		len;
 
 	s = va_arg(v->args, wchar_t*);
+	if (!s)
+	{
+		pf_putnull(v);
+		return ;
+	}
 	v->clen = (v->flags & F_CONV) ? pf_ustrlen(s) : pf_wstrlen(s);
 	(v->flags & F_PREC) && (v->clen > v->prec) ? v->clen = v->prec : 0;
 	v->min -= v->clen;
@@ -114,6 +113,11 @@ void	pf_str(t_vars *v)
 	else
 	{
 		s = va_arg(v->args, char*);
+		if (!s)
+		{
+			pf_putnull(v);
+			return ;
+		}
 		v->clen = ft_strlen(s);
 		(v->flags & F_PREC) && (v->clen > v->prec) ? v->clen = v->prec : 0;
 		v->min -= v->clen;

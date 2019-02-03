@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 15:45:00 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 02:39:18 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 04:25:48 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,28 @@
 static void			int_add(t_vars *v, intmax_t n)
 {
 	char	*tmp;
-	int		pad;
 	int		zpad;
 	int		ng;
 
 	ng = (n < 0) ? -1 : 1;
+	ng == -1 ? v->flags &= ~F_BLANK & ~F_SIGN : 0;
 	if (!(tmp = pf_uitoa_base((uintmax_t)(n * ng), v->base, v->flags & F_UP)))
 		return ;
 	v->clen = ft_strlen(tmp);
 	zpad = v->prec - v->clen;
-	pad = v->min - (zpad > 0 ? v->prec : v->clen);
-	pad -= ((v->flags & F_BLANK) || (v->flags & F_SIGN)) ? 1 : 0;
-	(v->flags & F_ZPAD) ? zpad = pad : 0;
-	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && pad-- > 0)
+	v->pad = v->min - (zpad > 0 ? v->prec : v->clen);
+	v->pad -= ((v->flags & F_BLANK) || (v->flags & F_SIGN) || ng == -1) ? 1 : 0;
+	(v->flags & F_ZPAD) ? zpad = v->pad : 0;
+	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && v->pad-- > 0)
 		pf_placechar(v, ' ');
 	(v->flags & F_BLANK) ? pf_placechar(v, ' ') : 0;
-	(v->flags & F_SIGN && ng == 1) ? pf_placechar(v, '+') : 0;
+	(v->flags & F_SIGN) ? pf_placechar(v, '+') : 0;
 	(ng == -1) ? pf_placechar(v, '-') : 0;
 	while (zpad-- > 0)
 		pf_placechar(v, '0');
 	while (*tmp)
 		pf_placechar(v, *(tmp++));
-	while (pad-- > 0)
+	while (!(v->flags & F_ZPAD) && v->pad-- > 0)
 		pf_placechar(v, ' ');
 	free(tmp - v->clen);
 }
@@ -88,12 +88,12 @@ static void			uint_add(t_vars *v, uintmax_t n)
 	(v->flags & F_ZPAD) ? zpad = pad : 0;
 	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && pad-- > 0)
 		pf_placechar(v, ' ');
-	conv_print(v);
+	n != 0 ? conv_print(v) : 0;
 	while (zpad-- > 0)
 		pf_placechar(v, '0');
 	while (*tmp)
 		pf_placechar(v, *(tmp++));
-	while (pad-- > 0)
+	while (!(v->flags & F_ZPAD) && pad-- > 0)
 		pf_placechar(v, ' ');
 	free(tmp - v->clen);
 }

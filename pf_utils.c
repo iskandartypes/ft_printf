@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 12:19:16 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 04:30:10 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	pf_placechar(t_vars *v, char c)
 {
-	printf("that block in hex: %#x\n", c);
 	v->buf[v->buf_i] = c;
 	v->buf_i++;
 	if (v->buf_i == v->buf_len)
@@ -24,6 +23,16 @@ void	pf_placechar(t_vars *v, char c)
 		else
 			v->buf_len *= 2;
 	}
+}
+
+void	pf_putnull(t_vars *v)
+{
+	pf_placechar(v, '(');
+	pf_placechar(v, 'n');
+	pf_placechar(v, 'u');
+	pf_placechar(v, 'l');
+	pf_placechar(v, 'l');
+	pf_placechar(v, ')');
 }
 
 char	*pf_uitoa_base(uintmax_t n, int base, int up)
@@ -36,7 +45,7 @@ char	*pf_uitoa_base(uintmax_t n, int base, int up)
 	tmp = n;
 	len = 1;
 	b = (up ? "0123456789ABCDEF" : "0123456789abcdef");
-	while (tmp >= base && len++)
+	while (tmp >= (uintmax_t)base && len++)
 		tmp /= base;
 	if (!(ret = ft_strnew(len)))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 05:19:37 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 04:10:50 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	parse_flags_mods(t_vars *v)
 }
 
 /*
-** the _ is a bonus base thing I wanted to add up to 16
+** the _ is a bonus base thing I wanted to add up to 16 (^ for upcase)
 ** overwrites conversion base if in range, otherwise goes back to default
 */
 
@@ -72,7 +72,7 @@ static void	parse_base_long(t_vars *v)
 	if (i == -1)
 		v->base = 10;
 	if (ft_charat("DOUCS", *v->format) > -1)
-		v->flags |= F_L;
+		v->flags = (v->flags & ~F_ALL) | F_L;
 	if (ft_charat("FBX", *v->format) > -1)
 		v->flags |= F_UP;
 }
@@ -89,7 +89,7 @@ static void	parse(t_vars *v)
 	v->base = 10;
 	parse_flags_mods(v);
 	parse_base_long(v);
-	if ((i = ft_charat("dDiibBoOuUxXfFcCsS", *v->format)) > -1 && v->format++)
+	if ((i = ft_charat("dDiibBoOuUxXfFcCsS%%", *v->format)) > -1 && v->format++)
 		v->ftab[i >> 1](v);
 	else
 		v->format++;
@@ -104,13 +104,12 @@ void		core(t_vars *v)
 			if (!*(v->format + 1))
 				break ;
 			v->format++;
-			if (*v->format != '%')
-				parse(v);
+			parse(v);
 		}
-		pf_placechar(v, *v->format);
-		if (!(v->buf))
+		else
+			pf_placechar(v, *(v->format++));
+		if (!(v->buf)) //THIS IS NOT ADEQUATE MCHECK FOR INSIDE FUNCS
 			return ;
-		v->format++;
 	}
 	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
 }
@@ -129,4 +128,5 @@ void		make_ftab(t_vars *v)
 	v->ftab[i++] = &pf_float;
 	v->ftab[i++] = &pf_char;
 	v->ftab[i++] = &pf_str;
+	v->ftab[i++] = &pf_pct;
 }

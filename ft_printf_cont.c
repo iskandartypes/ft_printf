@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 21:45:26 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/01/31 01:22:06 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 02:04:58 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 int	ft_vsprintf(char *str, const char *format, va_list ap)
 {
 	int		len;
-	size_t	max;
 	char	*ret;
 
 	len = ft_vasprintf(&ret, format, ap);
@@ -80,7 +79,7 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 
 	if (!(v = ft_memalloc(sizeof(*v))))
 		return (-1);
-	len = -1;
+	len = 0;
 	v->format = (char *)format;
 	va_copy(v->args, ap);
 	make_ftab(v);
@@ -91,7 +90,7 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 		v->buf_i = 0;
 		v->buf_len = INIT_BUF;
 		core(v);
-		len = v->buf_i - 1;
+		len = v->buf_i;
 	}
 	*ret = v->buf;
 	ft_memdel((void **)&v->ftab);
