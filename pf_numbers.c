@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 15:45:00 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 04:25:48 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 05:33:03 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,36 @@ static inline void	conv_print(t_vars *v)
 	}
 }
 
+// you just need to redo this, so it's readable
+// problem: for prec and prec 0, you need to not print a number
+// but you shouldn't subtract its length from the padding no more
+// and then you gotta do that ^ for int_add
+
 static void			uint_add(t_vars *v, uintmax_t n)
 {
 	char	*tmp;
-	int		pad;
 	int		zpad;
 
 	if (!(tmp = pf_uitoa_base(n, v->base, v->flags & F_UP)))
 		return ;
+	(v->base == 8 && v->flags & F_CONV) ? v->prec++ : 0;
 	v->clen = ft_strlen(tmp);
 	zpad = v->prec - v->clen;
-	pad = v->min - (zpad > 0 ? v->prec : v->clen);
-	if (v->flags & F_CONV)
-	{
-		pad -= v->base == 8 ? 1 : 0;
-		pad -= v->base == 2 || v->base == 16 ? 2 : 0;
-	}
-	(v->flags & F_ZPAD) ? zpad = pad : 0;
-	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && pad-- > 0)
+	v->pad = v->min - (zpad > 0 ? v->prec : v->clen);
+	if (v->flags & F_CONV && n != 0)
+		v->pad -= v->base == 2 || v->base == 16 ? 2 : 0;
+	(v->flags & F_ZPAD) ? zpad = v->pad : 0;
+	while (!(v->flags & F_RPAD) && !(v->flags & F_ZPAD) && v->pad-- > 0)
 		pf_placechar(v, ' ');
 	n != 0 ? conv_print(v) : 0;
 	while (zpad-- > 0)
 		pf_placechar(v, '0');
-	while (*tmp)
-		pf_placechar(v, *(tmp++));
-	while (!(v->flags & F_ZPAD) && pad-- > 0)
+	if (!(v->flags & F_PREC && v->prec == 0))
+		while (*tmp)
+			pf_placechar(v, *(tmp++));
+	while (!(v->flags & F_ZPAD) && v->pad-- > 0)
 		pf_placechar(v, ' ');
-	free(tmp - v->clen);
+	free(tmp - ((v->flags & F_PREC && v->prec == 0) ? 0 : v->clen));
 }
 
 /*
