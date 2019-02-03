@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 04:30:33 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 09:45:56 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define F_ALL		0x3f00	//all f_h - f_hh
 # define F_UP		0x4000	//FBX for uppercase
 
-# define NCONV		10
+# define NCONV		11
 # define ICONV		2
 # define UICONV		4
 

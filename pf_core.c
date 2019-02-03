@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 04:10:50 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 09:45:45 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ static void	parse(t_vars *v)
 	v->base = 10;
 	parse_flags_mods(v);
 	parse_base_long(v);
-	if ((i = ft_charat("dDiibBoOuUxXfFcCsS%%", *v->format)) > -1 && v->format++)
+	if ((i = ft_charat("dDiibBoOuUxXfFcCsS%%pp",\
+					*v->format)) > -1 && v->format++)
 		v->ftab[i >> 1](v);
 	else
 		v->format++;
@@ -129,4 +130,5 @@ void		make_ftab(t_vars *v)
 	v->ftab[i++] = &pf_char;
 	v->ftab[i++] = &pf_str;
 	v->ftab[i++] = &pf_pct;
+	v->ftab[i++] = &pf_ptr;
 }
