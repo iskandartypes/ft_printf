@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 04:30:10 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 19:48:30 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,26 @@ void	pf_putnull(t_vars *v)
 	pf_placechar(v, 'l');
 	pf_placechar(v, 'l');
 	pf_placechar(v, ')');
+}
+
+t_vars	*pf_partial_copy(t_vars *v)
+{
+	t_vars	*ret;
+
+	if (!(ret = ft_memalloc(sizeof(*ret))))
+		return (0);
+	ret->buf = v->buf;
+	ret->buf_i = v->buf_i;
+	ret->buf_len = v->buf_len;
+	ret->flags = v->flags & F_CONV;
+	return (ret);
+}
+
+void	pf_destroy_copy(t_vars *c, t_vars *v)
+{
+	v->buf_i = c->buf_i;
+	v->buf_len = c->buf_len;
+	ft_memdel((void **)&c);
 }
 
 char	*pf_uitoa_base(uintmax_t n, int base, int up)

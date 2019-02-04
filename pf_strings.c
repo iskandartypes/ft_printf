@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 04:36:31 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 19:46:16 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static void	pf_wstr(t_vars *v)
 {
 	wchar_t	*s;
 	int		len;
+	t_vars	*c;
 
 	s = va_arg(v->args, wchar_t*);
 	if (!s)
@@ -90,6 +91,7 @@ static void	pf_wstr(t_vars *v)
 		pf_putnull(v);
 		return ;
 	}
+	c = pf_partial_copy(v);
 	v->clen = (v->flags & F_CONV) ? pf_ustrlen(s) : pf_wstrlen(s);
 	(v->flags & F_PREC) && (v->clen > v->prec) ? v->clen = v->prec : 0;
 	v->min -= v->clen;
@@ -97,8 +99,9 @@ static void	pf_wstr(t_vars *v)
 		while (v->min-- > 0)
 			pf_placechar(v, v->flags & F_ZPAD ? '0' : ' ');
 	len = 0;
-	while ((len + (v->flags & F_CONV ? pf_uclen(*s) : pf_wclen(*s))) < v->clen)
-		len += pf_wchar(v, *(s++));
+	while ((len + (v->flags & F_CONV ? 1 : pf_wclen(*s))) < v->clen)
+		len += pf_wchar(c, *(s++));
+	pf_destroy_copy(c, v);
 	while (v->min-- > 0)
 		pf_placechar(v, ' ');
 }

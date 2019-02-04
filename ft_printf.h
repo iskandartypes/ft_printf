@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 11:49:28 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/03 19:27:17 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ int		pf_wstrlen(wchar_t *s);
 
 void	pf_placechar(t_vars *v, char c);
 void	pf_putnull(t_vars *v);
+t_vars	*pf_partial_copy(t_vars *v);
+void	pf_destroy_copy(t_vars *c, t_vars *v);
 char	*pf_uitoa_base(uintmax_t n, int base, int up);
 #endif
