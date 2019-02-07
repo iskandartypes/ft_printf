@@ -6,29 +6,29 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 03:56:40 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/06 13:23:31 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/06 18:43:04 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	not_numbers(t_vars *v, long double n, int up)
+static char	*not_numbers(long double n, int up)
 {
-	long double ninf;
+	char	*ret;
 
-	ninf = -1.0 / 0.0;
-	if (!(n == n))
+	if (!(ret = ft_strnew(3)))
+		return (0);
+	if (ft_isnan(n))
 	{
-		pf_placechar(v, (up) ? 'N' : 'n');
-		pf_placechar(v, (up) ? 'A' : 'a');
-		pf_placechar(v, (up) ? 'N' : 'n');
-		return ;
+		ret[0] = (up) ? 'N' : 'n';
+		ret[1] = (up) ? 'A' : 'a';
+		ret[2] = (up) ? 'N' : 'n';
+		return (ret);
 	}
-	if (n == ninf)
-		pf_placechar(v, '-');
-	pf_placechar(v, (up) ? 'I' : 'i');
-	pf_placechar(v, (up) ? 'N' : 'n');
-	pf_placechar(v, (up) ? 'F' : 'f');
+	ret[0] = (up) ? 'I' : 'i';
+	ret[1] = (up) ? 'N' : 'n';
+	ret[2] = (up) ? 'F' : 'f';
+	return (ret);
 }
 
 /*
@@ -54,10 +54,11 @@ static char	*ftoa(long double f, int prec, int dot)
 	int			i;
 
 	dec = f;
-	frac = prec ? (dec - f) * pf_pow(10, prec) : 0;
+	frac = prec ? (f - dec) * pf_pow(10, prec) : 0;
 	dlen = 1;
 	while (dec > 9 && dlen++)
 		dec /= 10;
+	dec = f;
 	if (!(ret = ft_strnew(dlen + prec + 1)))
 		return (0);
 	i = dlen - 1;
@@ -67,7 +68,7 @@ static char	*ftoa(long double f, int prec, int dot)
 		dec /= 10;
 	}
 	(frac || dot) ? ret[dlen++] = '.': 0;
-	i = dlen + prec;
+	i = dlen + prec - 1;
 	while (i > dlen - 1)
 	{
 		ret[i--] = frac ? (frac % 10) + '0' : '0';
@@ -87,8 +88,28 @@ static char	*ftoa(long double f, int prec, int dot)
 void		pf_float(t_vars *v)
 {
 	long double	f;
+	char		*str;
+	int			ng;
 
-	f = (long double)va_arg(v->args, v->flags & F_LL ? long double : double);
+	f = (v->flags & F_LL) ? va_arg(v->args, long double) :\
+		(double)va_arg(v->args, double);
 	(v->prec == 0 && !(v->flags & F_PREC)) ? v->prec = 6 : 0;
-	
+	ng = (f < 0) ? -1 : 1;
+	f *= ng;
+	if (!(str = (ft_isnan(f) || ft_isinf(f)) ? not_numbers(f, v->flags & F_UP)\
+				: ftoa(f, v->prec, v->flags & F_CONV)))
+		return ;
+	v->clen = ft_strlen(str);
+	v->pad = v->min - v->clen;
+	(ng == -1 || v->flags & F_SIGN || v->flags & F_BLANK) ? v->pad -=  1 : 0;
+	while (!(v->flags & F_RPAD) && v->pad-- > 0)
+		pf_placechar(v, ' ');
+	(ng == -1) ? pf_placechar(v, '-') : 0;
+	if ((v->flags & F_SIGN || v->flags & F_BLANK) && ng != -1)
+		v->flags & F_SIGN ? pf_placechar(v, '+') : pf_placechar(v, ' ');
+	while (*str)
+		pf_placechar(v, *str++);
+	while (v->pad--)
+		pf_placechar(v, ' ');
+	free(str - v->clen);
 }
