@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 09:45:45 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/11 10:12:48 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,32 @@ static void	parse_flags_mods(t_vars *v)
 	int	f;
 
 	f = -1;
-	while ((f = ft_charat("#0- +", *v->format)) > -1 && ++v->format)
+	while (*v->fmt && (f = ft_charat("#0- +\0", *v->fmt)) > -1 && v->fmt++)
 		v->flags |= (1 << f);
 	(v->flags & F_RPAD) ? v->flags &= ~F_ZPAD : 0;
 	(v->flags & F_SIGN) ? v->flags &= ~F_BLANK : 0;
-	if (*v->format >= '1' && *v->format <= '9')
-		v->min = ft_atoi_skip(&v->format);
-	if (*v->format == '.')
+	if (*v->fmt >= '1' && *v->fmt <= '9')
+		v->min = ft_atoi_skip(&v->fmt);
+	if (*v->fmt == '.')
 	{
-		v->format++;
-		v->prec = ft_atoi_skip(&v->format);
+		v->fmt++;
+		v->prec = ft_atoi_skip(&v->fmt);
 		v->flags |= F_PREC;
 	}
 	(v->flags & F_PREC) ? v->flags &= ~F_ZPAD : 0;
-	if ((f = ft_charat("hljzL", *v->format)) > -1)
+	if (*v->fmt && (f = ft_charat("hljzL\0", *v->fmt)) > -1)
 	{
 		v->flags |= (1 << (f + 8));
 		if (f == 0)
-			v->flags |= (*(v->format + 1) == 'h' && v->format++) ? F_HH : 0;
+			v->flags |= (*(v->fmt + 1) == 'h' && v->fmt++) ? F_HH : 0;
 		else if (f == 1)
-			v->flags |= (*(v->format + 1) == 'l' && v->format++) ? F_LL : 0;
-		v->format++;
+			v->flags |= (*(v->fmt + 1) == 'l' && v->fmt++) ? F_LL : 0;
+		v->fmt++;
 	}
 }
 
 /*
-** the _ is a bonus base thing I wanted to add up to 16 (^ for upcase)
+** the _ is a bonus base that does any base 2 - 16 inclusive (^ for upcase)
 ** overwrites conversion base if in range, otherwise goes back to default
 */
 
@@ -59,23 +59,29 @@ static void	parse_base_long(t_vars *v)
 	int i;
 
 	i = -1;
-	if (*v->format == '_' && *(++v->format))
+	if (*v->fmt == '_' && *(++v->fmt))
 	{
-		if (*v->format == '^' && *(++v->format))
+		if (*v->fmt == '^' && *(++v->fmt))
 			v->flags |= F_UP;
-		v->base = ft_atoi_skip(&v->format);
+		v->base = ft_atoi_skip(&v->fmt);
 		if (v->base > 1 && v->base < 17)
 			i = 0;
 	}
-	if (i && (i = ft_charat("bBbboOxX", *v->format)) > -1)
+	if (i && (i = ft_charat("bBbboOxX\0", *v->fmt)) > -1)
 		v->base = 2 << (i >> 1);
 	if (i == -1)
 		v->base = 10;
-	if (ft_charat("DOUCS", *v->format) > -1)
+	if (ft_charat("DOUCS\0", *v->fmt) > -1)
 		v->flags = (v->flags & ~F_ALL) | F_L;
-	if (ft_charat("FBX", *v->format) > -1)
+	if (ft_charat("FBX\0", *v->fmt) > -1)
 		v->flags |= F_UP;
 }
+
+/*
+** second parse_flags_mods is to get all specifiers out of way
+** idea is, even with incorrect input order, to at least get the conv
+** (user error minimizing)
+*/
 
 static void	parse(t_vars *v)
 {
@@ -88,27 +94,32 @@ static void	parse(t_vars *v)
 	v->prec = 0;
 	v->base = 10;
 	parse_flags_mods(v);
+	if (!(*v->fmt))
+		return ;
 	parse_base_long(v);
-	if ((i = ft_charat("dDiibBoOuUxXfFcCsS%%pp",\
-					*v->format)) > -1 && v->format++)
+	if (!(*v->fmt))
+		return ;
+	parse_flags_mods(v);
+	if (!(*v->fmt))
+		return ;
+	if ((i = ft_charat("dDiibBoOuUxXfFcCsS%%pp{[\0",\
+					*v->fmt)) > -1 && v->fmt++)
 		v->ftab[i >> 1](v);
-	else
-		v->format++;
 }
 
 void		core(t_vars *v)
 {
-	while (*(v->format))
+	while (*(v->fmt))
 	{
-		if (*(v->format) == '%')
+		if (*(v->fmt) == '%')
 		{
-			if (!*(v->format + 1))
+			if (!*(v->fmt + 1))
 				break ;
-			v->format++;
+			v->fmt++;
 			parse(v);
 		}
 		else
-			pf_placechar(v, *(v->format++));
+			pf_placechar(v, *(v->fmt++));
 		if (!(v->buf)) //THIS IS NOT ADEQUATE MCHECK FOR INSIDE FUNCS
 			return ;
 	}
@@ -131,4 +142,5 @@ void		make_ftab(t_vars *v)
 	v->ftab[i++] = &pf_str;
 	v->ftab[i++] = &pf_pct;
 	v->ftab[i++] = &pf_ptr;
+	v->ftab[i++] = &pf_color;
 }

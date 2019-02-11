@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 19:46:16 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/11 09:54:16 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	pf_wstr(t_vars *v)
 	s = va_arg(v->args, wchar_t*);
 	if (!s)
 	{
-		pf_putnull(v);
+		pf_placestr(v, "(null)\0");
 		return ;
 	}
 	c = pf_partial_copy(v);
@@ -118,7 +118,7 @@ void	pf_str(t_vars *v)
 		s = va_arg(v->args, char*);
 		if (!s)
 		{
-			pf_putnull(v);
+			pf_placestr(v, "(null)\0");
 			return ;
 		}
 		v->clen = ft_strlen(s);

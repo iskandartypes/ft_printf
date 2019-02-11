@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 21:45:26 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 02:04:58 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:17:12 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 	if (!(v = ft_memalloc(sizeof(*v))))
 		return (-1);
 	len = 0;
-	v->format = (char *)format;
+	v->fmt = (char *)format;
 	va_copy(v->args, ap);
 	make_ftab(v);
 	if (!(v->ftab))

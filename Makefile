@@ -6,7 +6,7 @@
 #    By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 19:40:37 by ikourkji          #+#    #+#              #
-#    Updated: 2019/02/03 01:58:55 by ikourkji         ###   ########.fr        #
+#    Updated: 2019/02/06 21:03:47 by ikourkji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LFT = ./libft/libft.a
 
-TST = test.c
+TST = test3.c
 
 DFLAGS = -g
 

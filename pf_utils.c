@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 19:48:30 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/11 08:01:52 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@ void	pf_placechar(t_vars *v, char c)
 	}
 }
 
-void	pf_putnull(t_vars *v)
+void	pf_placestr(t_vars *v, char *s)
 {
-	pf_placechar(v, '(');
-	pf_placechar(v, 'n');
-	pf_placechar(v, 'u');
-	pf_placechar(v, 'l');
-	pf_placechar(v, 'l');
-	pf_placechar(v, ')');
+	while (*s)
+		pf_placechar(v, *s++);
 }
 
 t_vars	*pf_partial_copy(t_vars *v)

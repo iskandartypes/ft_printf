@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 19:27:17 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/11 09:34:56 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define F_ALL		0x3f00	//all f_h - f_hh
 # define F_UP		0x4000	//FBX for uppercase
 
-# define NCONV		11
+# define NCONV		12
 # define ICONV		2
 # define UICONV		4
 
@@ -49,7 +49,7 @@ typedef void	(*t_func)(t_vars*);
 struct	s_vars
 {
 	va_list	args;
-	char	*format;
+	char	*fmt;
 	char	*buf;
 	t_func	*ftab;
 	size_t	buf_len;
@@ -87,6 +87,7 @@ void	pf_str(t_vars *v);
 void	pf_float(t_vars *v);
 void	pf_pct(t_vars *v);
 void	pf_ptr(t_vars *v);
+void	pf_color(t_vars *v);
 
 int		pf_uclen(wchar_t c);
 int		pf_wclen(wchar_t c);
@@ -94,7 +95,7 @@ int		pf_ustrlen(wchar_t *s);
 int		pf_wstrlen(wchar_t *s);
 
 void	pf_placechar(t_vars *v, char c);
-void	pf_putnull(t_vars *v);
+void	pf_placestr(t_vars *v, char *s);
 t_vars	*pf_partial_copy(t_vars *v);
 void	pf_destroy_copy(t_vars *c, t_vars *v);
 char	*pf_uitoa_base(uintmax_t n, int base, int up);
