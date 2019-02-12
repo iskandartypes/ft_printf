@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 03:56:40 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/06 18:43:04 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:50:10 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		pf_float(t_vars *v)
 		v->flags & F_SIGN ? pf_placechar(v, '+') : pf_placechar(v, ' ');
 	while (*str)
 		pf_placechar(v, *str++);
-	while (v->pad--)
+	while (v->pad-- > 0)
 		pf_placechar(v, ' ');
 	free(str - v->clen);
 }
