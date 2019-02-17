@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 21:11:19 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/11 08:01:52 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 07:05:09 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	pf_destroy_copy(t_vars *c, t_vars *v)
 {
 	v->buf_i = c->buf_i;
 	v->buf_len = c->buf_len;
+	v->buf = c->buf;
 	ft_memdel((void **)&c);
 }
 
