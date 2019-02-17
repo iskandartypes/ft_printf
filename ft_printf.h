@@ -6,39 +6,34 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/11 09:34:56 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 02:32:39 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stdio.h> //for testing
-
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
 # include "./libft/libft.h"
 
-//flags
-# define F_CONV		0x1		//# reqs conversions 1 << 0
-# define F_ZPAD		0x2		//0 pads w/zero instead of blank (ignore if precis.)
-# define F_RPAD		0x4		//- pads on right (left adjusted for min width). Overrides 0.
-# define F_BLANK	0x8		//' ' leaves blank before positive number
-# define F_SIGN		0x10	//+ all signed nums get a sign (so -17/+17). Overrides ' '
-# define F_PTR		0x20	//  Now ptrflag!   #s specifying min field width 1 << 5 
-# define F_PREC		0x40	//. if no #s after presumed 0; min digits for diouxX,
-//								# of digits after . for double, # sig digs for sci,
-//								# of chars in string (from front)
-# define F_BASE		0x80	//_, added flag for base
-# define F_H		0x100	//h short / unsigned short (all formatted di / ouxX)
-# define F_L		0x200	//l long / unsigned long
-# define F_MAX		0x400	//j intmax_t / uintmax_t i << 10
-# define F_SIZE		0x800	//z ssize_t / size_t
-# define F_LL		0x1000	//ll long long / unsigned long long
-# define F_HH		0x2000	//hh signed char / unsigned char
-# define F_ALL		0x3f00	//all f_h - f_hh
-# define F_UP		0x4000	//FBX for uppercase
+# define F_CONV		0x1
+# define F_ZPAD		0x2
+# define F_RPAD		0x4
+# define F_BLANK	0x8
+# define F_SIGN		0x10
+# define F_PTR		0x20
+# define F_PREC		0x40
+# define F_BASE		0x80
+# define F_H		0x100
+# define F_L		0x200
+# define F_MAX		0x400
+# define F_SIZE		0x800
+# define F_LL		0x1000
+# define F_HH		0x2000
+# define F_ALL		0x3f00
+# define F_UP		0x4000
 
 # define NCONV		12
 # define ICONV		2

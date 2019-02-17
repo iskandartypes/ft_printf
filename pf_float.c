@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 03:56:40 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/17 02:10:54 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 02:35:43 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char	*ftoa(long double f, int prec, int dot)
 	place_dec(dlen - 1, ret, dec);
 	(frac || dot) ? ret[dlen++] = '.' : 0;
 	i = dlen + prec - 1;
-	while (i > dlen - 1)
+	while (i > (unsigned)dlen - 1)
 	{
 		ret[i--] = frac ? (frac % 10) + '0' : '0';
 		frac /= 10;

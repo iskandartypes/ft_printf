@@ -6,7 +6,7 @@
 #    By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 19:40:37 by ikourkji          #+#    #+#              #
-#    Updated: 2019/02/17 01:56:00 by ikourkji         ###   ########.fr        #
+#    Updated: 2019/02/17 02:38:27 by ikourkji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,6 @@ LFT = ./libft/libft.a
 
 TST = tests/test3.c
 
-DFLAGS = -g
-
-FS = -fsanitize=address
-
 all: $(NAME)
 
 $(NAME):
@@ -38,7 +34,7 @@ $(NAME):
 	ranlib $(NAME)
 
 clean:
-	rm -f $(OBJ) $(LFTOBJ)
+	rm -f $(OBJ) $(LFTOBJ) libft/ft_*.o
 
 fclean: clean
 	rm -f $(NAME)
@@ -47,6 +43,3 @@ re: fclean all
 
 test:
 	gcc $(TST) $(SRC) $(LFT)
-
-testd:
-	gcc $(DFLAGS) $(FS) $(TST) $(SRC) $(LFT)
