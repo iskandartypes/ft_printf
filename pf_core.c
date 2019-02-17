@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/11 22:50:50 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 04:11:57 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void		core(t_vars *v)
 		}
 		else
 			pf_placechar(v, *(v->fmt++));
-		if (!(v->buf)) //THIS IS NOT ADEQUATE MCHECK FOR INSIDE FUNCS
+		if (!(v->buf))
 			return ;
 	}
 	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
