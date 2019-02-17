@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 02:36:16 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/11 09:54:16 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 01:39:59 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static void	pf_wstr(t_vars *v)
 		pf_placechar(v, ' ');
 }
 
-void	pf_str(t_vars *v)
+void		pf_str(t_vars *v)
 {
 	char	*s;
 	int		i;

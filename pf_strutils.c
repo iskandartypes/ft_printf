@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 12:16:03 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/02 12:24:47 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 01:40:38 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		pf_uclen(wchar_t c)
 		return (3);
 	if (c & 0x780)
 		return (2);
-   return (1);
+	return (1);
 }
 
 int		pf_wclen(wchar_t c)
@@ -42,7 +42,7 @@ int		pf_wclen(wchar_t c)
 	return (0);
 }
 
-int		pf_ustrlen(wchar_t	*s)
+int		pf_ustrlen(wchar_t *s)
 {
 	int len;
 

@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 15:45:00 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/03 11:50:27 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 01:39:23 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static inline void	conv_print(t_vars *v)
 	}
 }
 
-void			pf_uint_add(t_vars *v, uintmax_t n, int prec0)
+void				pf_uint_add(t_vars *v, uintmax_t n, int prec0)
 {
 	char	*tmp;
 	int		zpad;

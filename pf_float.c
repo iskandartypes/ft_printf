@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 03:56:40 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/16 22:01:14 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 02:10:54 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,36 @@ static int	cheap_pow(int val, int pow)
 	return (ret);
 }
 
-static int	round_up(int n)
-{
-	int	tmp;
-	int	flag;
+/*
+** static int	round_up(int n)
+** {
+** 	int	tmp;
+** 	int	flag;
+**
+** 	tmp = n / 10;
+** 	flag = 0;
+** 	if (n % 10 == 9 && tmp % 10 == 9)
+** 		flag = 1;
+** 	n += flag;
+** 	n /= 100;
+** 	if (tmp % 10 > 4 && !flag)
+** 		n++;
+** 	return (n);
+** }
+*/
 
-	tmp = n / 10;
-	flag = 0;
-	if (n % 10 == 9 && tmp % 10 == 9)
-		flag = 1;
-	n += flag;
-	n /= 100;
-	if (tmp % 10 > 4 && !flag)
-		n++;
-	return (n);
+static void	place_dec(int i, char *ret, int dec)
+{
+	while (i > -1)
+	{
+		ret[i--] = (dec % 10) + '0';
+		dec /= 10;
+	}
 }
+
+/*
+** i is uintmax to chop for dlen
+*/
 
 static char	*ftoa(long double f, int prec, int dot)
 {
@@ -63,24 +78,19 @@ static char	*ftoa(long double f, int prec, int dot)
 	uintmax_t	frac;
 	char		*ret;
 	int			dlen;
-	int			i;
+	uintmax_t	i;
 
 	dec = f;
 	frac = prec ? (f - dec) * cheap_pow(10, prec) + 0.5 : 0;
-//	frac = round_up(frac);
+	dec += ((f - dec) * 10 > 4 && !frac) ? 1 : 0;
+	i = dec;
 	dlen = 1;
-	while (dec > 9 && dlen++)
-		dec /= 10;
-	dec = f;
+	while (i > 9 && dlen++)
+		i /= 10;
 	if (!(ret = ft_strnew(dlen + prec + 1)))
 		return (0);
-	i = dlen - 1;
-	while (i > -1)
-	{
-		ret[i--] = (dec % 10) + '0';
-		dec /= 10;
-	}
-	(frac || dot) ? ret[dlen++] = '.': 0;
+	place_dec(dlen - 1, ret, dec);
+	(frac || dot) ? ret[dlen++] = '.' : 0;
 	i = dlen + prec - 1;
 	while (i > dlen - 1)
 	{
@@ -91,11 +101,19 @@ static char	*ftoa(long double f, int prec, int dot)
 }
 
 /*
-** I'm just going to print pad sign dec . frac pad (no zpad for float)
 ** The method above *works*, but for small input. (small here meaning int-size)
 ** What floats are good for is very large or very small numbers.
 ** We're unlikely to be printing at that scale, but if we were?
 ** This is a bad solution. An int won't be able to store the number.
+** For a better solution, see Grisu for something fast and less inaccurate
+** https://www.cs.tufts.edu/~nr/cs257/archive/florian-loitsch/printf.pdf
+** https://github.com/google/double-conversion/blob/master/
+** double-conversion/fast-dtoa.cc
+** or Dragon4 for something slower but least inaccurate
+** http://kurtstephens.com/files/p372-steele.pdf
+** optimization by Gay: https://ampl.com/REFS/rounding.pdf
+** See Ryan Jucket's blog for a pretty good explanation of the whys
+** http://www.ryanjuckett.com/programming/printing-floating-point-numbers/
 */
 
 void		pf_float(t_vars *v)
@@ -114,7 +132,7 @@ void		pf_float(t_vars *v)
 		return ;
 	v->clen = ft_strlen(str);
 	v->pad = v->min - v->clen;
-	(ng == -1 || v->flags & F_SIGN || v->flags & F_BLANK) ? v->pad -=  1 : 0;
+	(ng == -1 || v->flags & F_SIGN || v->flags & F_BLANK) ? v->pad -= 1 : 0;
 	while (!(v->flags & F_RPAD) && v->pad-- > 0)
 		pf_placechar(v, ' ');
 	(ng == -1) ? pf_placechar(v, '-') : 0;
