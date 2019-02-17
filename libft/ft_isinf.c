@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 10:21:27 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/06 10:23:43 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/17 04:55:00 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ int	ft_isinf(long double f)
 {
 	long double inf;
 
-	inf = 1.0/0.0;
+	inf = 1.0 / 0.0;
 	return (f == inf);
 }

@@ -6,7 +6,7 @@
 #    By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 19:40:37 by ikourkji          #+#    #+#              #
-#    Updated: 2019/02/17 02:38:27 by ikourkji         ###   ########.fr        #
+#    Updated: 2019/02/17 04:24:00 by ikourkji         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LFT = ./libft/libft.a
 
-TST = tests/test3.c
+TST = tests/test4.c
 
 all: $(NAME)
 
@@ -42,4 +42,4 @@ fclean: clean
 re: fclean all
 
 test:
-	gcc $(TST) $(SRC) $(LFT)
+	gcc $(TST) $(SRC) $(LFT) -g -fsanitize=address
