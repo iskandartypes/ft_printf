@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 03:56:40 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/11 22:50:10 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/02/16 22:01:14 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ static char	*not_numbers(long double n, int up)
 	return (ret);
 }
 
-/*
-** cheap power function
-*/
-
-static int	pf_pow(int val, int pow)
+static int	cheap_pow(int val, int pow)
 {
 	int	ret;
 
@@ -43,6 +39,22 @@ static int	pf_pow(int val, int pow)
 	while (pow-- > 0)
 		ret *= val;
 	return (ret);
+}
+
+static int	round_up(int n)
+{
+	int	tmp;
+	int	flag;
+
+	tmp = n / 10;
+	flag = 0;
+	if (n % 10 == 9 && tmp % 10 == 9)
+		flag = 1;
+	n += flag;
+	n /= 100;
+	if (tmp % 10 > 4 && !flag)
+		n++;
+	return (n);
 }
 
 static char	*ftoa(long double f, int prec, int dot)
@@ -54,7 +66,8 @@ static char	*ftoa(long double f, int prec, int dot)
 	int			i;
 
 	dec = f;
-	frac = prec ? (f - dec) * pf_pow(10, prec) : 0;
+	frac = prec ? (f - dec) * cheap_pow(10, prec) + 0.5 : 0;
+//	frac = round_up(frac);
 	dlen = 1;
 	while (dec > 9 && dlen++)
 		dec /= 10;
