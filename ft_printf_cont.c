@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 21:45:26 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/11 22:44:04 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/03/12 03:39:37 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_vasprintf(char **ret, const char *format, va_list ap)
 	len = 0;
 	v->fmt = (char *)format;
 	va_copy(v->args, ap);
-	make_ftab(v);
+	pf_make_ftab(v);
 	if (!(v->ftab))
 		return (-1);
 	if ((v->buf = ft_strnew(INIT_BUF - 1)))

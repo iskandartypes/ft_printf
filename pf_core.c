@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/26 19:47:29 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/02/17 07:05:05 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/03/12 03:37:22 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void		core(t_vars *v)
 	v->buf = ft_rememalloc(v->buf, v->buf_len, v->buf_i);
 }
 
-void		make_ftab(t_vars *v)
+void		pf_make_ftab(t_vars *v)
 {
 	int i;
 
