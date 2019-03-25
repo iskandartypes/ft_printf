@@ -6,7 +6,7 @@
 /*   By: ikourkji <ikourkji@student.42.us.or>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 01:52:18 by ikourkji          #+#    #+#             */
-/*   Updated: 2019/03/12 03:40:05 by ikourkji         ###   ########.fr       */
+/*   Updated: 2019/03/25 05:24:32 by ikourkji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-# include "./libft/libft.h"
+# include "libft.h"
 
 # define F_CONV		0x1
 # define F_ZPAD		0x2
