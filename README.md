@@ -1,6 +1,8 @@
 # ft_printf
 42 Silicon Valley recreation of printf.
 
+These functions are now submodules of [my libft](https://github.com/naregjan/libft), so I would suggest grabbing that if you want to use them.
+
 The floats are bad approximations that will only work for a small range of numbers; see the note in pf_floats.c on why, and for resources.
 
 Has typedefs for printf, sprintf, snprintf, asprintf, dprintf, vprintf, vsprintf, vsnprintf, vasprintf, and vdprintf, with prefix `ft_` (i.e. `ft_printf(const char *format, ...)`).
