@@ -1,7 +1,7 @@
 # ft_printf
-42 Silicon Valley recreation of printf.
+[42 Silicon Valley](https://www.42.us.org/) recreation of printf.
 
-These functions are now submodules of [my libft](https://github.com/naregjan/libft), so I would suggest grabbing that if you want to use them.
+These functions are now submodules of [my 42 library](https://github.com/naregjan/libft), so I would suggest grabbing that if you want to use them.
 
 The floats are bad approximations that will only work for a small range of numbers; see the note in pf_floats.c on why, and for resources.
 
